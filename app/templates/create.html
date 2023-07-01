@@ -1,0 +1,6 @@
+<!-- create.html -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">创建账单</button>
+</form>
