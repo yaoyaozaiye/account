@@ -3,16 +3,21 @@
 {
 	"name": "Python 3.11",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"build": {
-        // Path is relataive to the devcontainer.json file.
-        "dockerfile": "Dockerfile"
-    }
+	"image": "python-dev",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [8000],
+
+	"initializeCommand": [
+		"docker", "build", "--network=host",
+		"--build-arg", "https_proxy", 
+		"--build-arg", "http_proxy",
+		"--tag=python-dev",
+		".devcontainer"
+	]
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip3 install --user -r requirements.txt",

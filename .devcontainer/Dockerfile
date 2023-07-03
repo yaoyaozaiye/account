@@ -42,7 +42,7 @@ RUN apt-get update \
 
 # Install NVM, NPM and Node
 RUN curl -sSL -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash \
-    && bash -c 'source $HOME/.nvm/nvm.sh \
+    && bash -c 'source $NVM_DIR/nvm.sh \
     && nvm install --lts \
     && npm install -g prettier@2.0.5'
 
