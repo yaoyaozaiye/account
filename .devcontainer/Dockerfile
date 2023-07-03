@@ -10,8 +10,7 @@ ARG ENABLE_NONROOT_DOCKER="true"
 ARG SOURCE_SOCKET=/var/run/docker-host.sock
 ARG TARGET_SOCKET=/var/run/docker.sock
 
-COPY docker-debian.sh /tmp/docker-setup.sh
-COPY install.sh /tmp/install.sh
+
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
     # Verify common dependencies and utilities are installed
