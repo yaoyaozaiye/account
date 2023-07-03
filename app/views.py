@@ -6,6 +6,13 @@ from django.shortcuts import render, redirect
 from .models import Statement
 from .forms import StatementForm
 
+from rest_framework import viewsets
+from .serializers import MyModelSerializer
+
+class MyModelView(viewsets.ModelViewSet):
+    queryset = Statement.objects.all()
+    serializer_class = MyModelSerializer
+
 def index(request):
     list = Statement.objects.all()
     return render(request, 'index.html', {'list': list})
