@@ -4,8 +4,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/python:1-3.11-bullseye
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
-#ARG DOCKER_SCRIPT_SOURCE="https://raw.githubusercontent.com/microsoft/vscode-dev-containers/master/script-library/docker-debian.sh"
-ARG DOCKER_SCRIPT_SOURCE="https://rawcdn.githack.com/microsoft/vscode-dev-containers/master/script-library/docker-debian.sh"
+ARG DOCKER_SCRIPT_SOURCE="https://raw.githubusercontent.com/microsoft/vscode-dev-containers/master/script-library/docker-debian.sh"
 ARG DOCKER_SCRIPT_SHA="dev-mode"
 ARG ENABLE_NONROOT_DOCKER="true"
 ARG SOURCE_SOCKET=/var/run/docker-host.sock
@@ -37,14 +36,13 @@ RUN apt-get update \
     fi \
     #
     # Use Docker script from vscode script library to set things up
-    # && curl -sSL $DOCKER_SCRIPT_SOURCE -o /tmp/docker-setup.sh \
+    && curl -sSL $DOCKER_SCRIPT_SOURCE -o /tmp/docker-setup.sh \
     && ([ "${DOCKER_SCRIPT_SHA}" = "dev-mode" ] || (echo "${DOCKER_SCRIPT_SHA} */tmp/docker-setup.sh" | sha256sum -c -)) \
     && /bin/bash /tmp/docker-setup.sh "${ENABLE_NONROOT_DOCKER}" "${SOURCE_SOCKET}" "${TARGET_SOCKET}" "${USERNAME}" \
     && rm /tmp/docker-setup.sh
 
 # Install NVM, NPM and Node
-# RUN curl -sSL -o- https://rawcdn.githack.com/nvm-sh/nvm/v0.35.3/install.sh | bash \
-RUN cat /tmp/install.sh | bash \
+RUN curl -sSL -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash \
     && bash -c 'source $HOME/.nvm/nvm.sh \
     && nvm install --lts \
     && npm install -g prettier@2.0.5'
