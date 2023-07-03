@@ -11,6 +11,8 @@ ARG ENABLE_NONROOT_DOCKER="true"
 ARG SOURCE_SOCKET=/var/run/docker-host.sock
 ARG TARGET_SOCKET=/var/run/docker.sock
 
+COPY docker-debian.sh /tmp/docker-setup.sh
+COPY install.sh /tmp/install.sh
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
     # Verify common dependencies and utilities are installed
@@ -35,13 +37,14 @@ RUN apt-get update \
     fi \
     #
     # Use Docker script from vscode script library to set things up
-    && curl -sSL $DOCKER_SCRIPT_SOURCE -o /tmp/docker-setup.sh \
+    # && curl -sSL $DOCKER_SCRIPT_SOURCE -o /tmp/docker-setup.sh \
     && ([ "${DOCKER_SCRIPT_SHA}" = "dev-mode" ] || (echo "${DOCKER_SCRIPT_SHA} */tmp/docker-setup.sh" | sha256sum -c -)) \
     && /bin/bash /tmp/docker-setup.sh "${ENABLE_NONROOT_DOCKER}" "${SOURCE_SOCKET}" "${TARGET_SOCKET}" "${USERNAME}" \
     && rm /tmp/docker-setup.sh
 
 # Install NVM, NPM and Node
-RUN curl -o- https://rawcdn.githack.com/nvm-sh/nvm/v0.35.3/install.sh | bash \
+# RUN curl -sSL -o- https://rawcdn.githack.com/nvm-sh/nvm/v0.35.3/install.sh | bash \
+RUN cat /tmp/install.sh | bash \
     && bash -c 'source $HOME/.nvm/nvm.sh \
     && nvm install --lts \
     && npm install -g prettier@2.0.5'
