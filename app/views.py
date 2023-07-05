@@ -18,10 +18,6 @@ def index(request):
     list = Statement.objects.all()
     return render(request, 'index.html', {'list': list})
 
-
-
-
-
 def create(request, id):
     if request.method == 'POST':
         form = StatementForm(request.POST)

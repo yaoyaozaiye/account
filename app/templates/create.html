@@ -2,5 +2,6 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">创建账单</button>
+    <button type="submit">保存</button>
+    <button type="reset">清空</button>
 </form>
