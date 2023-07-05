@@ -1,5 +1,5 @@
 <!-- index.html -->
-<div><a href="/app/create">新建账单</a></div>
+<div><a href="{% url 'save' %}">新建账单</a></div>
 <table>
     <thead>
     <tr>
@@ -24,6 +24,9 @@
         <td>{{ model.mtime|date:'Y-m-d' }} {{ model.mtime|time:'H:i:s' }}</td>
         <td>
             <a href="{% url 'delete' model.id %}">删除</a>
+        </td>
+        <td>
+            <a href="{% url 'save' model.id %}">编辑</a>
         </td>
     </tr>
     {% empty %}
